@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class playerScript : MonoBehaviour
 {
-    
 
     public Rigidbody2D playerBody;
     public float playerSpeed =5;
-    bool canIJumpNow=false;
+    bool canIJumpNow=true;
 
     // Start is called before the first frame update
     void Start()
