@@ -6,49 +6,37 @@ public class playerScript : MonoBehaviour
 {
 
     public Rigidbody2D playerBody;
+    private BoxCollider2D BoxColl;
+    [SerializeField] private LayerMask canJump;
     public float playerSpeed =5;
-    bool canIJumpNow=true;
+    public float jumpSpeed = 20f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        BoxColl = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
          KeyDitect();
-
     }
-
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-        canIJumpNow = true;
-
-    }
-
 
 
     void KeyDitect()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetButtonDown("Jump") && isOnGround())
         {
-            playerBody.velocity = new Vector2(Vector2.right.x, playerBody.velocity.y)*playerSpeed;
+            playerBody.velocity = new Vector2(playerBody.velocity.x, jumpSpeed);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            playerBody.velocity = new Vector2(Vector2.left.x, playerBody.velocity.y) * playerSpeed;
-        }
-        else
-        {
-            playerBody.velocity = new Vector2(0,playerBody.velocity.y);
 
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow)&& canIJumpNow)
-        {
-            playerBody.velocity = playerBody.velocity+ Vector2.up * playerSpeed ;
-        }
+        float dirx = Input.GetAxisRaw("Horizontal");
+        playerBody.velocity = new Vector2(dirx * playerSpeed, playerBody.velocity.y);
     }
+    
+    bool isOnGround()
+    {
+        return Physics2D.BoxCast(BoxColl.bounds.center, BoxColl.bounds.size,0f,Vector2.down,0.1f,canJump);
+    } 
 }
