@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class HollyGrailScript : MonoBehaviour
 {
     public Rigidbody2D playerRB;
-    
+    public GameObject winText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +15,7 @@ public class HollyGrailScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("victory"))
         {
@@ -24,7 +25,7 @@ public class HollyGrailScript : MonoBehaviour
 
     private void Win()
     {
-        playerRB.bodyType = RigidbodyType2D.Static;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        winText.SetActive(true);
+        /*playerRB.bodyType = RigidbodyType2D.Static;*/
     }
 }
