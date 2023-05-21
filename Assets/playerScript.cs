@@ -10,11 +10,13 @@ public class playerScript : MonoBehaviour
     [SerializeField] private LayerMask canJump;
     public float playerSpeed =5;
     public float jumpSpeed = 20f;
+    private Animator animate;
 
     // Start is called before the first frame update
     void Start()
     {
         BoxColl = GetComponent<BoxCollider2D>();
+        animate = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,7 @@ public class playerScript : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isOnGround())
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, jumpSpeed);
+            animate.SetFloat("jump", jumpSpeed);
         }
 
         float dirx = Input.GetAxisRaw("Horizontal");
